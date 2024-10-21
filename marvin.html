@@ -1,0 +1,464 @@
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyhsticMC</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Playfair+Display:wght@400&display=swap" rel="stylesheet">
+    <style>
+ 
+
+ body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Montserrat', sans-serif;
+    height: 100vh;
+    overflow: hidden;
+    color: white;
+    text-align: center;
+    background: linear-gradient(135deg, #4a90e2, #9013fe);
+    animation: gradientAnimation 10s ease infinite;
+}
+
+.scrollable-content {
+    max-height: 600px; /* Define the scrollable height */
+    overflow-y: auto; /* Enable vertical scrolling */
+    padding: 10px; /* Optional padding */
+    border: 1px solid #ccc; /* Optional border */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Optional shadow */
+}
+
+@keyframes gradientAnimation {
+    0% {
+        background: linear-gradient(135deg, #4a90e2, #9013fe);
+    }
+    50% {
+        background: linear-gradient(135deg, #9013fe, #4a90e2);
+    }
+    100% {
+        background: linear-gradient(135deg, #4a90e2, #9013fe);
+    }
+}
+
+header {
+    background-color: rgba(30, 30, 30, 0.9);
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+    border-bottom: 5px solid #61dafb;
+}
+
+h1 {
+    margin: 0;
+    padding: 20px;
+    font-size: 2.8em;
+    font-family: 'Playfair Display', serif;
+    color: #f0f8ff;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+    animation: rainbowText 3s infinite linear;
+}
+
+@keyframes rainbowText {
+    0% { color: #ff0000; }
+    16.6% { color: #ff7f00; }
+    33.3% { color: #ffff00; }
+    50% { color: #00ff00; }
+    66.6% { color: #0000ff; }
+    83.3% { color: #4b0082; }
+    100% { color: #8b00ff; }
+}
+
+.stats, .content, .new-button, .tick {
+    display: none; 
+}
+
+.login-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: #ff0000;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.2em;
+    transition: background-color 0.3s ease;
+}
+
+.login-button:hover {
+    background-color: #f50057;
+}
+
+.tick {
+    position: absolute;
+    top: 10px;
+    right: 100px;
+    font-size: 2em;
+    color: #9013fe;
+    animation: fadeIn 0.5s forwards; 
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0); 
+    }
+    to {
+        opacity: 1;
+        transform: scale(1); 
+    }
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.7);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: rgba(30, 30, 30, 0.9);
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #61dafb;
+    width: 280px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.new-button {
+    background-color: #ffffff; 
+    color: black;
+    padding: 15px 30px;
+    margin: 10px;
+    border: 2px solid transparent;
+    font-size: 1.5em;
+    text-decoration: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    border-radius: 5px;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+
+.new-button:hover {
+    transform: scale(1.1);
+    background-color: #1100ff; 
+    border-color: #0026ff; 
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 90%;
+    padding: 8px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+input[type="submit"] {
+    background-color: #ff4081;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s ease;
+}
+
+input[type="submit"]:hover {
+    background-color: #f50057;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: center; 
+    margin-top: 10px; 
+    z-index: 1; 
+}
+
+.nav-button {
+    display: inline-block;
+    background-color: #ffffff; 
+    color: black;
+    padding: 15px 30px;
+    margin: 10px; 
+    border: 2px solid transparent;
+    font-size: 1.5em;
+    text-decoration: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    border-radius: 5px; 
+    text-align: center; 
+    position: relative; 
+    z-index: 1; 
+}
+
+.nav-button:hover {
+    transform: scale(1.1);
+    background-color: #39c0f0; 
+    border-color: #61dafb; 
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+}
+
+.content {
+    margin: 30px;
+    padding: 20px;
+    background: rgba(30, 30, 30, 0.9); 
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    animation: fadeIn 0.5s ease-in-out;
+    position: relative; 
+    z-index: 1; 
+}
+
+@media screen and (max-width: 768px) {
+    h1 {
+        font-size: 2.2em;
+    }
+
+    .nav-button {
+        padding: 10px 20px;
+        font-size: 1.2em;
+    }
+
+    .image-container img {
+        width: 30px; 
+        height: 30px; 
+    }
+}
+
+.image-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.image-container a {
+    display: block; 
+}
+
+.image-container img {
+    width: 50px; 
+    height: 50px;
+    margin: 5px; 
+    background-color: #ccc; 
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.image-container img:hover {
+    transform: scale(1.1); 
+}
+
+.credit {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 12px; /* Small size */
+    color: rgb(0, 26, 255); /* Color can be customized */
+}
+
+.plus-sign {
+    font-size: 0.8em;
+    vertical-align: super; 
+    margin-left: 2px; 
+    color: white;
+}
+
+footer {
+    background-color: rgba(30, 30, 30, 0.9);
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: 1; 
+}
+
+.register-prompt {
+    margin-top: 20px; 
+    font-size: 0.9em; 
+}
+
+.register-link {
+    color: #007BFF; 
+    cursor: pointer; 
+}
+
+.username-display {
+    position: absolute;
+    top: 20px;
+    right: 100px;
+    font-size: 1.2em;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 5px 10px;
+    border-radius: 5px;
+    display: none; 
+}
+
+    
+
+</style>
+
+
+
+</head>
+
+<body>
+
+    <header>
+        <h1>Willkommen auf MyhsticMC, deinem Portal für Abenteuer und Magie!</h1>
+        <div class="username-display" id="usernameDisplay"></div>
+        <div class="nav-container">
+            <a href="#" class="nav-button" onclick="showContent('home')">Home</a>
+            <a href="#" class="nav-button" onclick="showContent('wiki')">Wiki</a>
+            <a href="https://myhsticmc.craftingstore.net" class="nav-button" target="_blank">Store</a>
+            <span class="credit">by: Noxy</span>
+    </header>
+
+</body>
+</html>
+
+
+
+
+<div id="home" class="content">
+    <div class="image-container">
+        <a href="https://discord.gg/HETBpEkAzj" target="_blank">
+            <img src="https://th.bing.com/th/id/OIP.HT5rT1XrIwblMIETDWSVrQHaHa?rs=1&amp;pid=ImgDetMain" alt="Discord">
+        </a>
+
+        <a href="https://www.youtube.com/@Mystic_SMPv2" target="_blank">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/YouTube_social_white_square_%282017%29.svg/1200px-YouTube_social_white_square_%282017%29.svg.png" alt="YouTube Kanal">
+        </a>
+
+        <a href="https://www.twitch.tv/myhsticmc" target="_blank">
+            <img src="https://th.bing.com/th/id/OIP.6E1vKFRwBqGv_3PO8qBpswHaHa?rs=1&pid=ImgDetMain" alt="Twitch">
+        </a>
+    </div>
+    <h2>Startseite</h2>
+    <p>Herzlich willkommen auf MyhsticMC, wo epische Abenteuer und mystische Kreaturen auf dich warten. Entdecke einzigartige Welten, kämpfe gegen mächtige Mobs und gestalte deine eigene Geschichte!</p>
+</div>
+
+<div id="wiki" class="content scrollable-content">
+    <h2>Wiki</h2>
+    <p>Willkommen im MyhsticMC-Wiki, deinem ultimativen Leitfaden für alles, was unseren Server ausmacht! Hier sind einige unserer einzigartigen Features:</p>
+    <h3>Anticheat</h3>
+    <p>Wir nutzen ein fortschrittliches Anti-Cheat-System, um sicherzustellen, dass alle Spieler ein faires und spannendes Erlebnis haben.</p>
+    <h3>Fähigkeiten und Vorteile</h3>
+    <p>Jeder Spieler hat Zugang zu einzigartigen Fähigkeiten, die ihm im Spiel Vorteile verschaffen. Entdecke die verschiedenen Klassen und finde heraus, welche am besten zu deinem Spielstil passt!</p>
+    <h3>Tier-System</h3>
+    <p>Steigere deinen Rang im Spiel und schalte neue Fähigkeiten und Belohnungen frei! Dein Fortschritt wird belohnt und gibt dir Anreize, weiter zu spielen.</p>
+    <h3>PVP</h3>
+    <p>Auf unserem Server gibt es spannende PVP-Arenen, in denen du deine Fähigkeiten im Kampf gegen andere Spieler unter Beweis stellen kannst. Fordere Freunde oder Feinde heraus und kämpfe um Ruhm und Ehre!</p>
+    <h3>Survival</h3>
+    <p>Unser Survival-Modus bietet dir die Möglichkeit, die Welt von MyhsticMC in einer herausfordernden Umgebung zu erkunden. Baue, überlebe und entwickle deine Strategien, um in dieser unbarmherzigen Welt zu überleben.</p>
+    <h3>Citybuild</h3>
+    <p>Baue deine eigene Stadt und gestalte sie nach deinen Wünschen! Im Citybuild-Modus kannst du Grundstücke erwerben, Häuser errichten und an einer florierenden Wirtschaft teilnehmen.</p>
+    <h3>Probleme / Hilfe?</h3>
+    <p>Kein Problem, wir helfen dir deine Probleme anzupassen und dir zu helfen. Komm einfach auf unseren👉 <a href="https://discord.gg/N9MhEjRstF" target="_blank" class="underline">Discord</a> 👈Server...</p>
+    <h3>Quests & Missionen</h3>
+    <p>Entdecke spannende Quests und Missionen, die dir epische Belohnungen und neue Herausforderungen bieten. Schließe tägliche Aufgaben ab oder wage dich an umfangreiche Story-basierte Abenteuer!</p>
+    <h3>Handel & Marktplatz</h3>
+    <p>Unser Marktplatz ermöglicht es Spielern, ihre selbst gesammelten oder hergestellten Waren zu verkaufen. Werde ein geschickter Händler, baue dein eigenes Imperium auf und verdiene dir Reichtümer!</p>
+    <h3>Gilden & Clans</h3>
+    <p>Schließe dich mit anderen Spielern zu mächtigen Gilden oder Clans zusammen. Arbeitet gemeinsam an großen Projekten, kämpft in epischen Schlachten und dominiert den Server als Gemeinschaft!</p>
+    <h3>Das MyhsticMC-Team</h3>
+    <p>Hinter MyhsticMC steht ein engagiertes Team von Entwicklern, die ständig an neuen Features und Verbesserungen arbeiten, um dir das bestmögliche Spielerlebnis zu bieten.</p>
+</div>
+<script>
+
+function showContent(contentId) {
+            // Alle Inhalte ausblenden
+            const contents = document.querySelectorAll('.content');
+            contents.forEach(content => {
+                content.style.display = 'none';
+            });
+
+            // Den gewählten Inhalt einblenden
+            document.getElementById(contentId).style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('loginModal').style.display = 'none';
+        }
+
+       
+        
+
+        window.onload = function() {
+            showContent('home'); // Standardmäßig den Home-Inhalt anzeigen
+        };
+
+   
+function showContent(contentId) {
+    const contents = document.querySelectorAll('.content');
+    contents.forEach(content => {
+        content.style.display = 'none'; 
+    });
+
+  
+
+    function showContent(contentId) {
+        
+        document.querySelectorAll('.content').forEach(content => content.style.display = 'none');
+
+       
+        const contentToShow = document.getElementById(contentId);
+        contentToShow.style.display = 'block';
+
+     
+        if (contentId === 'serverStats') {
+            loadServerStats();
+        }
+    }
+
+
+    }
+    
+    function showContent(contentId) {
+    const contents = document.querySelectorAll('.content');
+    contents.forEach(content => {
+        content.style.display = 'none'; 
+    });
+
+    const selectedContent = document.getElementById(contentId);
+    selectedContent.style.display = 'block'; 
+}
+
+
+</script>
+
